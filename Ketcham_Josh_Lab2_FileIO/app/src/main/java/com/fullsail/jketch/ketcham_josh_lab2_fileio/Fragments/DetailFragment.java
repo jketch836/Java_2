@@ -24,12 +24,10 @@ public class DetailFragment extends Fragment {
     public static DetailFragment newInstance(String name, String classtype, String race) {
         DetailFragment detailFrag = new DetailFragment();
         Bundle args = new Bundle();
+
         args.putString(theName, name);
         args.putString(theClass,classtype);
-                args.putString(theRace,race);
-
-
-
+        args.putString(theRace,race);
 
         return detailFrag;
     }

@@ -11,10 +11,7 @@ import com.fullsail.jketch.ketcham_josh_lab2_fileio.Fragments.SpinnerFrag;
 
 public class MainActivity extends Activity implements SpinnerFrag.SpinnerListener {
 
-
-    NetworkCheck checkNetwork = new NetworkCheck();
-
-    WoWAPI guildMemberInfo = new WoWAPI();
+    WoWAPI guildMemberInfo = new WoWAPI(this);
 
     FragmentManager fragmentManager;
 
@@ -27,7 +24,6 @@ public class MainActivity extends Activity implements SpinnerFrag.SpinnerListene
         fragmentManager.beginTransaction()
                 .replace(R.id.SpinnerContainer, new SpinnerFrag(), SpinnerFrag.TAG)
                 .commit();
-
 
     }
 
@@ -57,11 +53,19 @@ public class MainActivity extends Activity implements SpinnerFrag.SpinnerListene
 
         Log.d("HELLO", name);
 
-        guildMemberInfo.execute("http://us.battle.net/api/wow/character/The%20Venture%20Co/" + name + "?fields=appearance");
+        executeAPI(name);
+
         fragmentManager.beginTransaction()
-                .replace(R.id.DescriptionContainer, DetailFragment.newInstance(name, classtype, race))
+                .replace(R.id.DescriptionContainer, DetailFragment.newInstance(name, classtype, race), DetailFragment.TAG)
                 .commit();
 
     }
+
+    public void executeAPI(String n) {
+
+        guildMemberInfo.execute("http://us.battle.net/api/wow/character/The%20Venture%20Co/" + n + "?fields=appearance");
+
+    }
+
 
 }

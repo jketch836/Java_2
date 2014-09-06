@@ -1,8 +1,11 @@
 package com.fullsail.jketch.ketcham_josh_lab2_fileio;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.fullsail.jketch.ketcham_josh_lab2_fileio.Fragments.DetailFragment;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
@@ -22,6 +25,11 @@ import java.util.ArrayList;
 public class WoWAPI extends AsyncTask<String, Integer, String> {
 
     Context mContext;
+
+    public WoWAPI (Context c) {
+
+        mContext = c;
+    }
 
     public ArrayList<WoWToonClass> toonInfo = new ArrayList<WoWToonClass>();
 
@@ -78,10 +86,6 @@ public class WoWAPI extends AsyncTask<String, Integer, String> {
 
             Log.d("TOON RACE", "The Toon Race: " + aRace);
 
-            theLvL = jsonObject.getInt("level");
-
-            Log.d("TOON LVL", "The Toon lvl: " + theLvL);
-
 
         } catch (MalformedURLException e) {
 
@@ -112,11 +116,10 @@ public class WoWAPI extends AsyncTask<String, Integer, String> {
         MainActivity activity2 = (MainActivity) mContext;
 
 
-//        FragmentManager fragmentManager = activity2.getFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.DescriptionContainer, DetailFragment.newInstance(aName, aClass, aRace))
-//                .commit();
-
+        FragmentManager fragmentManager = activity2.getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.DescriptionContainer, DetailFragment.newInstance(aName, aClass, aRace))
+                .commit();
 
 
         File external = activity2.getExternalFilesDir(null);

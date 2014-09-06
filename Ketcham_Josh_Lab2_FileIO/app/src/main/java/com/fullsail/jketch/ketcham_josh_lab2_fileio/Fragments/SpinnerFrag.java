@@ -11,7 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.fullsail.jketch.ketcham_josh_lab2_fileio.NetworkCheck;
 import com.fullsail.jketch.ketcham_josh_lab2_fileio.R;
+import com.fullsail.jketch.ketcham_josh_lab2_fileio.WoWAPI;
 
 
 public class SpinnerFrag extends Fragment {
@@ -19,6 +21,10 @@ public class SpinnerFrag extends Fragment {
     public static final String TAG = "SpinnerFragment";
 
     Spinner spinner;
+
+    NetworkCheck checkNetwork = new NetworkCheck();
+
+    WoWAPI guildMemberInfo = new WoWAPI(null);
 
     public interface SpinnerListener {
         public void getString(String name, String classtype, String race);
@@ -72,7 +78,7 @@ public class SpinnerFrag extends Fragment {
 
         spinner = (Spinner) getActivity().findViewById(R.id.theSpinner);
 
-        ArrayAdapter<String> toonAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, WoWToons);
+        ArrayAdapter<String> toonAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, WoWToons);
 
         spinner.setAdapter(toonAdapter);
 
@@ -88,6 +94,8 @@ public class SpinnerFrag extends Fragment {
                 String classy = toonClass.getText().toString();
                 String species = toonSpecies.getText().toString();
 
+                guildMemberInfo.execute("http://us.battle.net/api/wow/character/The%20Venture%20Co/" + name + "?fields=appearance");
+
                 mListener.getString(name, classy, species);
 
             }
@@ -97,6 +105,12 @@ public class SpinnerFrag extends Fragment {
 
             }
         });
+
+    }
+
+    public void executeAPI(String n) {
+
+        guildMemberInfo.execute("http://us.battle.net/api/wow/character/The%20Venture%20Co/" + n + "?fields=appearance");
 
     }
 
